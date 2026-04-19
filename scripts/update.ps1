@@ -6,7 +6,7 @@ param(
   [switch]$forceAll    # Fuerza deploy de todo aunque no haya cambios
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 $root = Split-Path $PSScriptRoot -Parent
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
@@ -43,9 +43,9 @@ $FRONTEND_PROD = "https://telekoquitoman.pro"
 Write-Step "Detectando cambios"
 Set-Location $root
 
-$changedFiles = git diff --name-only HEAD 2>$null
-if (-not $changedFiles) { $changedFiles = git diff --name-only 2>$null }
-$untrackedFiles = git ls-files --others --exclude-standard 2>$null
+$changedFiles = (git diff --name-only HEAD 2>&1) | Where-Object { $_ -notmatch "^warning:" }
+if (-not $changedFiles) { $changedFiles = (git diff --name-only 2>&1) | Where-Object { $_ -notmatch "^warning:" } }
+$untrackedFiles = (git ls-files --others --exclude-standard 2>&1) | Where-Object { $_ -notmatch "^warning:" }
 $allChanged = @($changedFiles) + @($untrackedFiles) | Where-Object { $_ }
 
 $backChanged  = $forceAll -or ($allChanged | Where-Object { $_ -match "^worker/" })
@@ -179,7 +179,7 @@ if ($frontChanged) {
       Write-Info "UP $relativePath"
       $ftpOk++
     } catch {
-      Write-Warn "ERR $relativePath — $($_.Exception.Message)"
+      Write-Warn "ERR $relativePath - $($_.Exception.Message)"
       $ftpErr++
     }
   }
@@ -208,17 +208,17 @@ if (-not $pendingChanges) {
   $scope = if ($parts.Count -gt 0) { $parts -join " + " } else { "misc" }
 
   git add -A 2>&1 | Out-Null
-  git commit -m "update($scope): deploy $timestamp
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>" 2>&1 | ForEach-Object { Write-Info $_ }
-
+  $commitMsg = "update($scope): deploy $timestamp`n`nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+  git commit -m $commitMsg 2>&1 | ForEach-Object { Write-Info $_ }
   git push origin main 2>&1 | ForEach-Object { Write-Info $_ }
   Write-Ok "Push a GitHub completado"
 }
 
-# ── Resumen final ─────────────────────────────────────────────────────────────
-Write-Host "`n" + ("=" * 55) -ForegroundColor Cyan
+# ── Resumen final ────────────────────────────────────────────────────────────
+$sep = "=" * 55
+Write-Host ""
+Write-Host $sep -ForegroundColor Cyan
 Write-Host "  ACTUALIZACION COMPLETADA" -ForegroundColor Green
 Write-Host "  Web:    $FRONTEND_PROD" -ForegroundColor White
 Write-Host "  Worker: $WORKER_PROD" -ForegroundColor White
-Write-Host ("=" * 55) -ForegroundColor Cyan
+Write-Host $sep -ForegroundColor Cyan
