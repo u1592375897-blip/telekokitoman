@@ -20,24 +20,19 @@ const ipods: CollectionItem[] = [
 ]
 
 const playstations: CollectionItem[] = [
-  { model: 'PS1',       year: '1994', status: 'buscando' },
-  { model: 'PS2',       year: '2000', status: 'buscando' },
-  { model: 'PS3 Fat',   year: '2006', status: 'obtenido', note: 'En coleccion' },
-  { model: 'PS3 Slim',  year: '2009', status: 'buscando' },
-  { model: 'PS4',       year: '2013', status: 'buscando' },
-  { model: 'PS4 Pro',   year: '2016', status: 'obtenido', note: 'En coleccion' },
-  { model: 'PS5',       year: '2020', status: 'buscando' },
+  { model: 'PS2',          year: '2000', status: 'buscando' },
+  { model: 'PS3 Fat',      year: '2006', status: 'obtenido', note: 'En coleccion' },
+  { model: 'PS3 Slim',     year: '2009', status: 'buscando' },
+  { model: 'PS3 Super Slim',year:'2012', status: 'buscando' },
+  { model: 'PS4',          year: '2013', status: 'buscando' },
+  { model: 'PS4 Pro',      year: '2016', status: 'obtenido', note: 'En coleccion' },
+  { model: 'PSP',          year: '2005', status: 'buscando' },
+  { model: 'PS Vita',      year: '2011', status: 'buscando' },
 ]
 
 const nintendo: CollectionItem[] = [
-  { model: 'NES',          year: '1983', status: 'buscando' },
-  { model: 'SNES',         year: '1990', status: 'buscando' },
-  { model: 'Nintendo 64',  year: '1996', status: 'buscando' },
-  { model: 'GameCube',     year: '2001', status: 'buscando' },
-  { model: 'Wii',          year: '2006', status: 'obtenido', note: 'En coleccion' },
-  { model: 'Wii U',        year: '2012', status: 'buscando' },
-  { model: 'Switch',       year: '2017', status: 'buscando' },
-  { model: 'Switch OLED',  year: '2021', status: 'obtenido', note: 'En coleccion' },
+  { model: 'Wii',         year: '2006', status: 'obtenido', note: 'En coleccion' },
+  { model: 'Switch OLED', year: '2021', status: 'obtenido', note: 'En coleccion' },
 ]
 
 type IPhoneStatus = ItemStatus
