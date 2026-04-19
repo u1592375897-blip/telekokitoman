@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './lib/theme'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import Layout from './components/Layout'
 import Chatbot from './components/Chatbot'
 import PageInicio from './pages/PageInicio'
 import PageVideos from './pages/PageVideos'
@@ -13,8 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
-        <Navbar />
-        <main>
+        <Layout>
           <Routes>
             <Route path="/"           element={<PageInicio />} />
             <Route path="/videos"     element={<PageVideos />} />
@@ -22,8 +20,7 @@ function App() {
             <Route path="/sobre-mi"   element={<PageSobreMi />} />
             <Route path="/contacto"   element={<PageContacto />} />
           </Routes>
-        </main>
-        <Footer />
+        </Layout>
         <Chatbot />
       </ThemeProvider>
     </BrowserRouter>

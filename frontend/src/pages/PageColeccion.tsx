@@ -114,7 +114,7 @@ function CollectionGrid({ title, items, emoji, delayBase }: {
 
 export default function PageColeccion() {
   return (
-    <div className="pt-24 pb-16 px-4 min-h-screen">
+    <div className="px-4 py-8">
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
