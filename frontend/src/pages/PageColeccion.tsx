@@ -1,14 +1,23 @@
 import { motion } from 'framer-motion'
 
-const retro = [
-  { name: 'iPod Touch 4G',  year: '2010', desc: 'El ultimo iPod Touch con camara trasera de 0.7MP. iOS 6.1.6 en 2026.', emoji: '🎵', tag: 'Apple' },
-  { name: 'iPod Shuffle 2G', year: '2006', desc: 'El reproductor mas pequeño del mundo. Sin pantalla, puro shuffle.',    emoji: '🎵', tag: 'Apple' },
-  { name: 'iPod Classic',    year: '2001', desc: 'El original que cambio la musica para siempre.',                        emoji: '🎵', tag: 'Apple' },
-]
-
 type ItemStatus = 'obtenido' | 'roto' | 'reparando' | 'buscando'
 
 type CollectionItem = { model: string; year: string; status: ItemStatus; note?: string }
+
+const ipods: CollectionItem[] = [
+  { model: 'iPod Touch 4G',  year: '2010', status: 'obtenido', note: 'En coleccion' },
+  { model: 'iPod Shuffle 2G',year: '2006', status: 'obtenido', note: 'En coleccion' },
+  { model: 'iPod Classic',   year: '2001', status: 'obtenido', note: 'En coleccion' },
+  { model: 'iPod Mini',      year: '2004', status: 'buscando' },
+  { model: 'iPod Nano 1G',   year: '2005', status: 'buscando' },
+  { model: 'iPod Shuffle 1G',year: '2005', status: 'buscando' },
+  { model: 'iPod Nano 2G',   year: '2006', status: 'buscando' },
+  { model: 'iPod Touch 1G',  year: '2007', status: 'buscando' },
+  { model: 'iPod Touch 2G',  year: '2008', status: 'buscando' },
+  { model: 'iPod Touch 3G',  year: '2009', status: 'buscando' },
+  { model: 'iPod Nano 6G',   year: '2010', status: 'buscando' },
+  { model: 'iPod Touch 5G',  year: '2012', status: 'buscando' },
+]
 
 const playstations: CollectionItem[] = [
   { model: 'PS1',       year: '1994', status: 'buscando' },
@@ -55,12 +64,16 @@ const statusStyle: Record<IPhoneStatus, { label: string; color: string; bg: stri
   buscando:  { label: 'Buscando',   color: '#6b7280', bg: 'rgba(107,114,128,0.05)', border: 'rgba(107,114,128,0.2)' },
 }
 
-function ConsoleGrid({ title, items, emoji, delayBase }: {
+function CollectionGrid({ title, items, emoji, delayBase }: {
   title: string
   items: CollectionItem[]
   emoji: string
   delayBase: number
 }) {
+  const sorted = [...items].sort((a, b) => {
+    const order = { obtenido: 0, roto: 1, reparando: 2, buscando: 3 }
+    return order[a.status] - order[b.status]
+  })
   const obtenidos = items.filter(i => i.status !== 'buscando').length
   return (
     <div className="mb-10">
@@ -71,10 +84,10 @@ function ConsoleGrid({ title, items, emoji, delayBase }: {
         className="flex items-center justify-between mb-4"
       >
         <h2 className="text-xs font-semibold tracking-widest uppercase text-gray-500">{title}</h2>
-        <span className="text-xs font-mono" style={{ color: '#00f5ff' }}>{obtenidos}/{items.length} obtenidos</span>
+        <span className="text-xs font-mono" style={{ color: 'hsl(var(--primary))' }}>{obtenidos}/{items.length} obtenidos</span>
       </motion.div>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-        {items.map((item, i) => {
+        {sorted.map((item, i) => {
           const s = statusStyle[item.status]
           const obtained = item.status !== 'buscando'
           return (
@@ -105,8 +118,6 @@ function ConsoleGrid({ title, items, emoji, delayBase }: {
 }
 
 export default function PageColeccion() {
-  const obtenidos = iphones.filter(i => i.status !== 'buscando').length
-
   return (
     <div className="pt-24 pb-16 px-4 min-h-screen">
       <div className="max-w-5xl mx-auto">
@@ -137,103 +148,10 @@ export default function PageColeccion() {
           </motion.p>
         </div>
 
-        {/* Otros retro */}
-        <motion.h2
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-xs font-semibold tracking-widest uppercase mb-5 text-gray-500"
-        >
-          Coleccion retro
-        </motion.h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
-          {retro.map((item, i) => (
-            <motion.div
-              key={item.name}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.07 }}
-              className="glass-panel rounded-sm p-6 group hover:border-cyan-500/25 transition-all duration-300"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <span className="text-4xl">{item.emoji}</span>
-                <div className="text-right">
-                  <span
-                    className="text-xs font-bold px-2 py-0.5 rounded-sm"
-                    style={{ background: 'rgba(0,245,255,0.08)', color: '#00f5ff', border: '1px solid rgba(0,245,255,0.2)' }}
-                  >
-                    {item.tag}
-                  </span>
-                  <p className="text-xs text-gray-600 font-mono mt-1">{item.year}</p>
-                </div>
-              </div>
-              <h3 className="font-display font-black text-white text-lg mb-2 group-hover:text-cyan-300 transition-colors">
-                {item.name}
-              </h3>
-              <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
-              <div
-                className="mt-4 h-0.5 w-0 group-hover:w-full transition-all duration-500"
-                style={{ background: 'linear-gradient(90deg, #00f5ff, #bf00ff)' }}
-              />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* iPhone collection */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="flex items-center justify-between mb-5"
-        >
-          <h2 className="text-xs font-semibold tracking-widest uppercase text-gray-500">
-            Coleccion iPhone (2G — 8)
-          </h2>
-          <span className="text-xs font-mono" style={{ color: '#00f5ff' }}>
-            {obtenidos}/{iphones.length} obtenidos
-          </span>
-        </motion.div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {iphones.map((phone, i) => {
-            const s = statusStyle[phone.status]
-            const obtained = phone.status !== 'buscando'
-            return (
-              <motion.div
-                key={phone.model}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.35 + i * 0.05 }}
-                className="glass-panel rounded-sm p-4 transition-all duration-300"
-                style={{
-                  opacity: obtained ? 1 : 0.45,
-                  borderColor: obtained ? s.border : undefined,
-                }}
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg">{obtained ? '📱' : '🔍'}</span>
-                  <span
-                    className="text-xs font-bold px-1.5 py-0.5 rounded-sm"
-                    style={{ background: s.bg, color: s.color, border: `1px solid ${s.border}` }}
-                  >
-                    {s.label}
-                  </span>
-                </div>
-                <p className="font-display font-black text-sm text-white mb-0.5">{phone.model}</p>
-                <p className="text-xs text-gray-600 font-mono">{phone.year}</p>
-                {phone.note && (
-                  <p className="text-xs mt-1.5" style={{ color: s.color }}>{phone.note}</p>
-                )}
-              </motion.div>
-            )
-          })}
-        </div>
-
-        {/* PlayStation */}
-        <ConsoleGrid title="Coleccion PlayStation" items={playstations} emoji="🎮" delayBase={0.6} />
-
-        {/* Nintendo */}
-        <ConsoleGrid title="Coleccion Nintendo" items={nintendo} emoji="🕹️" delayBase={0.7} />
+        <CollectionGrid title="Coleccion iPod"            items={ipods}       emoji="🎵" delayBase={0.1} />
+        <CollectionGrid title="Coleccion iPhone (2G - 8)" items={iphones}     emoji="📱" delayBase={0.2} />
+        <CollectionGrid title="Coleccion PlayStation"     items={playstations} emoji="🎮" delayBase={0.3} />
+        <CollectionGrid title="Coleccion Nintendo"        items={nintendo}    emoji="🕹️" delayBase={0.4} />
 
         {/* Leyenda */}
         <motion.div
