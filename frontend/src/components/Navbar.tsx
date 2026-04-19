@@ -1,93 +1,136 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useTheme } from '../lib/theme'
+import { useTheme, themeNames, themeEmojis, type Theme } from '../lib/theme'
 
 const links = [
   { label: 'Inicio',    to: '/' },
   { label: 'Videos',   to: '/videos' },
-  { label: 'Colección', to: '/coleccion' },
-  { label: 'Sobre mí', to: '/sobre-mi' },
+  { label: 'Coleccion', to: '/coleccion' },
+  { label: 'Sobre mi', to: '/sobre-mi' },
   { label: 'Contacto', to: '/contacto' },
 ]
 
+const themes = Object.keys(themeNames) as Theme[]
+
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
-  const { mode, toggleMode } = useTheme()
+  const [menuOpen, setMenuOpen]   = useState(false)
+  const [themeOpen, setThemeOpen] = useState(false)
+  const { theme, setTheme, darkMode, setDarkMode, mode } = useTheme()
   const location = useLocation()
 
+  const darkOnly = new Set<Theme>(['cyborg', 'ps2', 'aurora', 'xvlk'])
+  const canToggleDark = !darkOnly.has(theme)
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-cyan-500/10">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b"
+         style={{ borderColor: 'var(--border-cyber)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+
+        {/* Logo */}
         <Link to="/" className="font-display font-black text-lg tracking-wider">
           <span className="neon-text-cyan">TELEKO</span>
           <span className="text-white">QUITOMAN</span>
         </Link>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-5">
           {links.map(l => (
-            <Link
-              key={l.to}
-              to={l.to}
+            <Link key={l.to} to={l.to}
               className={`text-sm font-medium transition-colors duration-200 ${
-                location.pathname === l.to ? 'text-cyan-400' : 'text-gray-400 hover:text-white'
-              }`}
-            >
+                location.pathname === l.to
+                  ? 'neon-text-cyan'
+                  : 'text-gray-400 hover:text-white'
+              }`}>
               {l.label}
             </Link>
           ))}
-          <button
-            onClick={toggleMode}
-            className="w-9 h-9 rounded-sm flex items-center justify-center transition-all duration-200 text-gray-400 hover:text-white"
-            style={{ border: '1px solid rgba(0,245,255,0.2)', background: 'rgba(0,245,255,0.04)' }}
-            aria-label="Cambiar modo"
-            title={mode === 'dark' ? 'Modo día' : 'Modo noche'}
-          >
-            {mode === 'dark' ? '☀️' : '🌙'}
-          </button>
-          <a
-            href="https://www.youtube.com/@Teleko360"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-cyber text-sm rounded-sm"
-          >
+
+          {/* Dark/light toggle — only when theme allows it */}
+          {canToggleDark && (
+            <button onClick={() => setDarkMode(!darkMode)}
+              className="w-8 h-8 rounded flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+              style={{ border: '1px solid var(--border-cyber)', background: 'hsl(var(--primary)/.04)' }}
+              title={mode === 'dark' ? 'Modo dia' : 'Modo noche'}>
+              {mode === 'dark' ? '☀️' : '🌙'}
+            </button>
+          )}
+
+          {/* Theme picker */}
+          <div className="relative">
+            <button onClick={() => setThemeOpen(o => !o)}
+              className="w-8 h-8 rounded flex items-center justify-center text-gray-400 hover:text-white transition-colors text-base"
+              style={{ border: '1px solid var(--border-cyber)', background: 'hsl(var(--primary)/.04)' }}
+              title="Cambiar tema">
+              {themeEmojis[theme]}
+            </button>
+            {themeOpen && (
+              <div className="absolute right-0 top-10 glass-panel rounded-lg p-2 min-w-[160px] shadow-xl"
+                   style={{ border: '1px solid var(--border-cyber)' }}>
+                {themes.map(t => (
+                  <button key={t} onClick={() => { setTheme(t); setThemeOpen(false) }}
+                    className={`w-full flex items-center gap-2 px-3 py-2 rounded text-sm transition-colors text-left ${
+                      theme === t ? 'neon-text-cyan font-bold' : 'text-gray-400 hover:text-white'
+                    }`}>
+                    <span>{themeEmojis[t]}</span>
+                    <span>{themeNames[t]}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <a href="https://www.youtube.com/@Teleko360" target="_blank" rel="noopener noreferrer"
+            className="btn-cyber text-sm rounded">
             ▶ Canal YT
           </a>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden text-gray-400 hover:text-white"
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-        >
-          <div className="w-6 h-0.5 bg-current mb-1.5 transition-all" style={{ transform: open ? 'rotate(45deg) translate(2px, 8px)' : '' }} />
-          <div className="w-6 h-0.5 bg-current mb-1.5 transition-all" style={{ opacity: open ? 0 : 1 }} />
-          <div className="w-6 h-0.5 bg-current transition-all" style={{ transform: open ? 'rotate(-45deg) translate(2px, -8px)' : '' }} />
+        {/* Mobile burger */}
+        <button className="md:hidden text-gray-400 hover:text-white" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+          <div className="w-6 h-0.5 bg-current mb-1.5 transition-all" style={{ transform: menuOpen ? 'rotate(45deg) translate(2px,8px)' : '' }} />
+          <div className="w-6 h-0.5 bg-current mb-1.5 transition-all" style={{ opacity: menuOpen ? 0 : 1 }} />
+          <div className="w-6 h-0.5 bg-current transition-all"         style={{ transform: menuOpen ? 'rotate(-45deg) translate(2px,-8px)' : '' }} />
         </button>
       </div>
 
       {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden glass-panel border-t border-cyan-500/10 px-4 py-4 space-y-3">
+      {menuOpen && (
+        <div className="md:hidden glass-panel border-t px-4 py-4 space-y-2"
+             style={{ borderColor: 'var(--border-cyber)' }}>
           {links.map(l => (
-            <Link
-              key={l.to}
-              to={l.to}
-              onClick={() => setOpen(false)}
-              className={`block text-sm font-medium transition-colors py-1 ${
-                location.pathname === l.to ? 'text-cyan-400' : 'text-gray-400 hover:text-white'
-              }`}
-            >
+            <Link key={l.to} to={l.to} onClick={() => setMenuOpen(false)}
+              className={`block text-sm font-medium transition-colors py-1.5 ${
+                location.pathname === l.to ? 'neon-text-cyan' : 'text-gray-400 hover:text-white'
+              }`}>
               {l.label}
             </Link>
           ))}
-          <a
-            href="https://www.youtube.com/@Teleko360"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block btn-cyber text-sm text-center rounded-sm mt-2"
-          >
+
+          {/* Theme selector mobile */}
+          <div className="pt-2 border-t" style={{ borderColor: 'var(--border-cyber)' }}>
+            <p className="text-xs text-gray-600 mb-2 uppercase tracking-wider">Tema</p>
+            <div className="flex flex-wrap gap-2">
+              {themes.map(t => (
+                <button key={t} onClick={() => { setTheme(t); setMenuOpen(false) }}
+                  className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors ${
+                    theme === t ? 'neon-text-cyan font-bold' : 'text-gray-400'
+                  }`}
+                  style={{ border: '1px solid var(--border-cyber)' }}>
+                  {themeEmojis[t]} {themeNames[t]}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {canToggleDark && (
+            <button onClick={() => { setDarkMode(!darkMode); setMenuOpen(false) }}
+              className="flex items-center gap-2 text-sm text-gray-400 hover:text-white py-1">
+              {mode === 'dark' ? '☀️ Modo dia' : '🌙 Modo noche'}
+            </button>
+          )}
+
+          <a href="https://www.youtube.com/@Teleko360" target="_blank" rel="noopener noreferrer"
+            className="block btn-cyber text-sm text-center rounded mt-2">
             ▶ Canal YouTube
           </a>
         </div>
