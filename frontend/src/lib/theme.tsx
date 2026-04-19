@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import { setSoundTheme } from './sounds'
 
 export type Theme = 'cyborg' | 'aero' | 'minimal' | 'apple2001' | 'ps2' | 'aurora' | 'xvlk'
 export type AuroraVariant = 'green' | 'purple'
@@ -55,9 +56,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setTheme = (t: Theme) => {
     setThemeRaw(t)
+    setSoundTheme(t)
     localStorage.setItem('tkm-theme', t)
     if (darkOnly.has(t)) { setDarkRaw(true); localStorage.setItem('tkm-dark', 'true') }
   }
+
+  useEffect(() => { setSoundTheme(theme) }, [theme])
 
   const setDarkMode = (d: boolean) => {
     if (darkOnly.has(theme) && !d) return

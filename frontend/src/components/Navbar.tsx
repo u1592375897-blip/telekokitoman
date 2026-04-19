@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme, themeNames, themeEmojis, type Theme } from '../lib/theme'
+import { playClickSound, setSoundMuted, setGlobalVolume } from '../lib/sounds'
 
 const links = [
   { label: 'Inicio',    to: '/' },
@@ -15,7 +16,17 @@ const themes = Object.keys(themeNames) as Theme[]
 export default function Navbar() {
   const [menuOpen, setMenuOpen]   = useState(false)
   const [themeOpen, setThemeOpen] = useState(false)
+  const [muted, setMuted]         = useState(false)
   const { theme, setTheme, darkMode, setDarkMode, mode } = useTheme()
+
+  const click = () => playClickSound()
+
+  const toggleMute = () => {
+    const next = !muted
+    setMuted(next)
+    setSoundMuted(next)
+    if (!next) setGlobalVolume(100)
+  }
   const location = useLocation()
 
   const darkOnly = new Set<Theme>(['cyborg', 'ps2', 'aurora', 'xvlk'])
@@ -35,7 +46,7 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-5">
           {links.map(l => (
-            <Link key={l.to} to={l.to}
+            <Link key={l.to} to={l.to} onClick={click}
               className={`text-sm font-medium transition-colors duration-200 ${
                 location.pathname === l.to
                   ? 'neon-text-cyan'
@@ -45,9 +56,17 @@ export default function Navbar() {
             </Link>
           ))}
 
+          {/* Mute toggle */}
+          <button onClick={toggleMute}
+            className="w-8 h-8 rounded flex items-center justify-center text-gray-400 hover:text-white transition-colors text-sm"
+            style={{ border: '1px solid var(--border-cyber)', background: 'hsl(var(--primary)/.04)' }}
+            title={muted ? 'Activar sonido' : 'Silenciar'}>
+            {muted ? '🔇' : '🔊'}
+          </button>
+
           {/* Dark/light toggle — only when theme allows it */}
           {canToggleDark && (
-            <button onClick={() => setDarkMode(!darkMode)}
+            <button onClick={() => { setDarkMode(!darkMode); click() }}
               className="w-8 h-8 rounded flex items-center justify-center text-gray-400 hover:text-white transition-colors"
               style={{ border: '1px solid var(--border-cyber)', background: 'hsl(var(--primary)/.04)' }}
               title={mode === 'dark' ? 'Modo dia' : 'Modo noche'}>
@@ -67,7 +86,7 @@ export default function Navbar() {
               <div className="absolute right-0 top-10 glass-panel rounded-lg p-2 min-w-[160px] shadow-xl"
                    style={{ border: '1px solid var(--border-cyber)' }}>
                 {themes.map(t => (
-                  <button key={t} onClick={() => { setTheme(t); setThemeOpen(false) }}
+                  <button key={t} onClick={() => { setTheme(t); setThemeOpen(false); click() }}
                     className={`w-full flex items-center gap-2 px-3 py-2 rounded text-sm transition-colors text-left ${
                       theme === t ? 'neon-text-cyan font-bold' : 'text-gray-400 hover:text-white'
                     }`}>
