@@ -2,25 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Modo oscuro (defecto) ── */
+:root, [data-mode="dark"] {
+  --bg:           #0a0a0f;
+  --bg-panel:     rgba(13, 13, 26, 0.7);
+  --text:         #e0e0e0;
+  --text-muted:   #6b7280;
+  --border-cyber: rgba(0, 245, 255, 0.12);
+  --grid-line:    rgba(0, 245, 255, 0.04);
+  --scrollbar-bg: #0a0a0f;
+}
+
+/* ── Modo claro ── */
+[data-mode="light"] {
+  --bg:           #f0f4f8;
+  --bg-panel:     rgba(255, 255, 255, 0.75);
+  --text:         #0d1117;
+  --text-muted:   #4b5563;
+  --border-cyber: rgba(0, 180, 200, 0.2);
+  --grid-line:    rgba(0, 180, 200, 0.06);
+  --scrollbar-bg: #e5eaf0;
+}
+
 @layer base {
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    background-color: #0a0a0f;
-    color: #e0e0e0;
+    background-color: var(--bg);
+    color: var(--text);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s, color 0.3s;
   }
 }
 
 @layer components {
   .cyber-border { border: 1px solid rgba(0, 245, 255, 0.2); }
   .glass-panel {
-    background: rgba(13, 13, 26, 0.7);
+    background: var(--bg-panel);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 245, 255, 0.12);
+    border: 1px solid var(--border-cyber);
   }
   .neon-text-cyan {
     color: #00f5ff;
@@ -65,6 +88,6 @@ body::before {
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-track { background: var(--scrollbar-bg); }
 ::-webkit-scrollbar-thumb { background: rgba(0, 245, 255, 0.3); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(0, 245, 255, 0.6); }

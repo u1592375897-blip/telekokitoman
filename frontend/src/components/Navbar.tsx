@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTheme } from '../lib/theme'
 
 const links = [
   { label: 'Inicio', href: '#hero' },
@@ -10,6 +11,7 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const { mode, toggleMode } = useTheme()
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-cyan-500/10">
@@ -31,6 +33,15 @@ export default function Navbar() {
               {l.label}
             </a>
           ))}
+          <button
+            onClick={toggleMode}
+            className="w-9 h-9 rounded-sm flex items-center justify-center transition-all duration-200 text-gray-400 hover:text-white"
+            style={{ border: '1px solid rgba(0,245,255,0.2)', background: 'rgba(0,245,255,0.04)' }}
+            aria-label="Cambiar modo"
+            title={mode === 'dark' ? 'Modo día' : 'Modo noche'}
+          >
+            {mode === 'dark' ? '☀️' : '🌙'}
+          </button>
           <a
             href="https://www.youtube.com/@Teleko360"
             target="_blank"
