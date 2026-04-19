@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env.local
+.env.*.local
+frontend/.env.development.local
+*.local
+.wrangler/
+scripts/ftp.config.ps1
+worker/.dev.vars
+telekoquitomanweb/
+.claude/
+frontend/wrangler.jsonc

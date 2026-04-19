@@ -1,0 +1,12 @@
+name = "telekoquitoman-worker"
+main = "src/index.ts"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+YOUTUBE_CHANNEL_ID = "UC4P7eTdv3zuF6rCkrae7SRQ"
+ALLOWED_ORIGIN = "https://telekoquitoman.pro"
+
+# Secrets (set via: wrangler secret put ANTHROPIC_API_KEY)
+# ANTHROPIC_API_KEY
+# YOUTUBE_API_KEY
