@@ -1,37 +1,40 @@
 import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../lib/theme'
 
 const links = [
-  { label: 'Inicio', href: '#hero' },
-  { label: 'Videos', href: '#videos' },
-  { label: 'Sobre mí', href: '#about' },
-  { label: 'Redes', href: '#redes' },
-  { label: 'Contacto', href: '#contact' },
+  { label: 'Inicio',    to: '/' },
+  { label: 'Videos',   to: '/videos' },
+  { label: 'Colección', to: '/coleccion' },
+  { label: 'Sobre mí', to: '/sobre-mi' },
+  { label: 'Contacto', to: '/contacto' },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const { mode, toggleMode } = useTheme()
+  const location = useLocation()
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-cyan-500/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
-        <a href="#hero" className="font-display font-black text-lg tracking-wider">
+        <Link to="/" className="font-display font-black text-lg tracking-wider">
           <span className="neon-text-cyan">TELEKO</span>
           <span className="text-white">QUITOMAN</span>
-        </a>
+        </Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-6">
           {links.map(l => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm font-medium text-gray-400 hover:text-cyber-cyan transition-colors duration-200"
-              style={{ '--tw-text-opacity': '1' } as React.CSSProperties}
+            <Link
+              key={l.to}
+              to={l.to}
+              className={`text-sm font-medium transition-colors duration-200 ${
+                location.pathname === l.to ? 'text-cyan-400' : 'text-gray-400 hover:text-white'
+              }`}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <button
             onClick={toggleMode}
@@ -68,14 +71,16 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden glass-panel border-t border-cyan-500/10 px-4 py-4 space-y-3">
           {links.map(l => (
-            <a
-              key={l.href}
-              href={l.href}
+            <Link
+              key={l.to}
+              to={l.to}
               onClick={() => setOpen(false)}
-              className="block text-sm font-medium text-gray-400 hover:text-white transition-colors py-1"
+              className={`block text-sm font-medium transition-colors py-1 ${
+                location.pathname === l.to ? 'text-cyan-400' : 'text-gray-400 hover:text-white'
+              }`}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <a
             href="https://www.youtube.com/@Teleko360"

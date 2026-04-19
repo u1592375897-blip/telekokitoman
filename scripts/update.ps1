@@ -1,4 +1,4 @@
-# update.ps1 — Detección de cambios, deploy local + prod, tests y commit/push
+﻿# update.ps1 - Deteccion de cambios, deploy local + prod, tests y commit/push
 # Uso directo: .\scripts\update.ps1
 # Invocado también por el comando /ACTUALIZAR_WEB de Claude Code
 
@@ -102,7 +102,7 @@ else               { Write-Info "Frontend sin cambios -> se omite" }
 if ($backChanged) {
 
   # ── Test local del worker ────────────────────────────────────────────────
-  Write-Step "Backend — Iniciando worker local (wrangler dev)"
+  Write-Step "Backend - Iniciando worker local (wrangler dev)"
   Set-Location (Join-Path $root "worker")
   Write-Action "Lanzando wrangler dev en background en puerto 8787..."
 
@@ -116,7 +116,7 @@ if ($backChanged) {
   Start-Sleep -Seconds 8
   Write-Ok "Worker local listo en $WORKER_LOCAL"
 
-  Write-Step "Backend — Tests locales (3 endpoints)"
+  Write-Step "Backend - Tests locales (3 endpoints)"
   $localResults = @()
   $localResults += Test-Http "$WORKER_LOCAL/api/youtube" "GET"  $null                                               "/api/youtube"
   $localResults += Test-Http "$WORKER_LOCAL/api/chat"    "POST" '{"message":"Hola, quien eres?"}'                   "/api/chat"
@@ -128,12 +128,12 @@ if ($backChanged) {
 
   $localFailed = ($localResults | Where-Object { $_ -eq $false }).Count
   if ($localFailed -gt 0) {
-    Write-Fail "$localFailed test(s) local(es) fallaron — abortando"
+    Write-Fail "$localFailed test(s) local(es) fallaron - abortando"
     exit 1
   }
   Write-Ok "Todos los tests locales del worker pasaron (3/3)"
 
-  Write-Step "Backend — Deploy a Cloudflare Workers (produccion)"
+  Write-Step "Backend - Deploy a Cloudflare Workers (produccion)"
   Write-Action "Ejecutando wrangler deploy..."
   npx wrangler deploy 2>&1 | Select-String -Pattern "Deployed|Error|Uploaded|Version" | ForEach-Object { Write-Info $_.Line }
   if ($LASTEXITCODE -ne 0) { Write-Fail "Deploy del worker fallado"; exit 1 }
@@ -142,7 +142,7 @@ if ($backChanged) {
   Write-Action "Esperando 5 segundos a que se propague..."
   Start-Sleep -Seconds 5
 
-  Write-Step "Backend — Tests en produccion"
+  Write-Step "Backend - Tests en produccion"
   $prodBackResults = @()
   $prodBackResults += Test-Http "$WORKER_PROD/api/youtube" "GET"  $null              "/api/youtube (prod)"
   $prodBackResults += Test-Http "$WORKER_PROD/api/chat"    "POST" '{"message":"Hola"}' "/api/chat (prod)"
@@ -157,7 +157,7 @@ if ($backChanged) {
 # ════════════════════════════════════════════════════════════════════════════
 if ($frontChanged) {
 
-  Write-Step "Frontend — Build de produccion"
+  Write-Step "Frontend - Build de produccion"
   Set-Location (Join-Path $root "frontend")
   Write-Action "Ejecutando npm run build con .env.production..."
   $buildOut = npm run build 2>&1
@@ -165,7 +165,7 @@ if ($frontChanged) {
   if ($LASTEXITCODE -ne 0) { Write-Fail "Build del frontend fallado"; exit 1 }
   Write-Ok "Build completado -> frontend/dist/"
 
-  Write-Step "Frontend — Verificacion del build"
+  Write-Step "Frontend - Verificacion del build"
   $distPath = Join-Path $root "frontend\dist"
   Write-Action "Comprobando archivos generados en dist/..."
 
@@ -184,7 +184,7 @@ if ($frontChanged) {
   if ($workerUrlFound) { Write-Ok "URL del worker de produccion correcta en el build" }
   else { Write-Warn "URL del worker no encontrada en el build -> revisa .env.production" }
 
-  Write-Step "Frontend — Deploy FTP a $FTP_HOST"
+  Write-Step "Frontend - Deploy FTP a $FTP_HOST"
   $files = Get-ChildItem -Path $distPath -Recurse -File
   Write-Action "Subiendo $($files.Count) archivos por FTP..."
   $ftpOk = 0; $ftpErr = 0
@@ -222,7 +222,7 @@ if ($frontChanged) {
   if ($ftpErr -eq 0) { Write-Ok "FTP completado: $ftpOk archivos subidos sin errores" }
   else               { Write-Warn "FTP: $ftpOk subidos, $ftpErr errores" }
 
-  Write-Step "Frontend — Tests en produccion"
+  Write-Step "Frontend - Tests en produccion"
   Write-Action "Esperando 3 segundos y testeando $FRONTEND_PROD..."
   Start-Sleep -Seconds 3
   Test-Http $FRONTEND_PROD "GET" $null $FRONTEND_PROD | Out-Null
@@ -231,7 +231,7 @@ if ($frontChanged) {
 # ════════════════════════════════════════════════════════════════════════════
 # COMMIT Y PUSH
 # ════════════════════════════════════════════════════════════════════════════
-Write-Step "Git — Commit y push a GitHub"
+Write-Step "Git - Commit y push a GitHub"
 Set-Location $root
 
 Write-Action "Comprobando cambios pendientes con git status..."
