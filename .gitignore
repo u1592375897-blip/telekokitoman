@@ -8,5 +8,5 @@ frontend/.env.development.local
 scripts/ftp.config.ps1
 worker/.dev.vars
 telekoquitomanweb/
-.claude/
+.claude/settings.local.json
 frontend/wrangler.jsonc
