@@ -1,14 +1,37 @@
 import { motion } from 'framer-motion'
 
 const retro = [
-  { name: 'iPod Touch 4G', year: '2010', desc: 'El ultimo iPod Touch con camara trasera de 0.7MP. iOS 6.1.6 en 2026.', emoji: '🎵', tag: 'Apple' },
-  { name: 'iPod Shuffle 2G', year: '2006', desc: 'El reproductor mas pequeño del mundo. Sin pantalla, puro shuffle.', emoji: '🎵', tag: 'Apple' },
-  { name: 'PlayStation 2', year: '2000', desc: 'La consola mas vendida de la historia. Todavia con juegos fisicos.', emoji: '🎮', tag: 'Sony' },
-  { name: 'PlayStation 3', year: '2006', desc: 'Temas, homebrew y juegos clasicos en 2026.', emoji: '🎮', tag: 'Sony' },
-  { name: 'iPod Classic', year: '2001', desc: 'El original que cambio la musica para siempre.', emoji: '🎵', tag: 'Apple' },
+  { name: 'iPod Touch 4G',  year: '2010', desc: 'El ultimo iPod Touch con camara trasera de 0.7MP. iOS 6.1.6 en 2026.', emoji: '🎵', tag: 'Apple' },
+  { name: 'iPod Shuffle 2G', year: '2006', desc: 'El reproductor mas pequeño del mundo. Sin pantalla, puro shuffle.',    emoji: '🎵', tag: 'Apple' },
+  { name: 'iPod Classic',    year: '2001', desc: 'El original que cambio la musica para siempre.',                        emoji: '🎵', tag: 'Apple' },
 ]
 
-type IPhoneStatus = 'obtenido' | 'roto' | 'reparando' | 'buscando'
+type ItemStatus = 'obtenido' | 'roto' | 'reparando' | 'buscando'
+
+type CollectionItem = { model: string; year: string; status: ItemStatus; note?: string }
+
+const playstations: CollectionItem[] = [
+  { model: 'PS1',       year: '1994', status: 'buscando' },
+  { model: 'PS2',       year: '2000', status: 'buscando' },
+  { model: 'PS3 Fat',   year: '2006', status: 'obtenido', note: 'En coleccion' },
+  { model: 'PS3 Slim',  year: '2009', status: 'buscando' },
+  { model: 'PS4',       year: '2013', status: 'buscando' },
+  { model: 'PS4 Pro',   year: '2016', status: 'obtenido', note: 'En coleccion' },
+  { model: 'PS5',       year: '2020', status: 'buscando' },
+]
+
+const nintendo: CollectionItem[] = [
+  { model: 'NES',          year: '1983', status: 'buscando' },
+  { model: 'SNES',         year: '1990', status: 'buscando' },
+  { model: 'Nintendo 64',  year: '1996', status: 'buscando' },
+  { model: 'GameCube',     year: '2001', status: 'buscando' },
+  { model: 'Wii',          year: '2006', status: 'obtenido', note: 'En coleccion' },
+  { model: 'Wii U',        year: '2012', status: 'buscando' },
+  { model: 'Switch',       year: '2017', status: 'buscando' },
+  { model: 'Switch OLED',  year: '2021', status: 'obtenido', note: 'En coleccion' },
+]
+
+type IPhoneStatus = ItemStatus
 
 const iphones: { model: string; year: string; status: IPhoneStatus; note?: string }[] = [
   { model: 'iPhone 2G',  year: '2007', status: 'buscando' },
@@ -30,6 +53,55 @@ const statusStyle: Record<IPhoneStatus, { label: string; color: string; bg: stri
   roto:      { label: 'Roto',       color: '#ff6b35', bg: 'rgba(255,107,53,0.08)',  border: 'rgba(255,107,53,0.3)' },
   reparando: { label: 'Reparando',  color: '#f5c518', bg: 'rgba(245,197,24,0.08)',  border: 'rgba(245,197,24,0.3)' },
   buscando:  { label: 'Buscando',   color: '#6b7280', bg: 'rgba(107,114,128,0.05)', border: 'rgba(107,114,128,0.2)' },
+}
+
+function ConsoleGrid({ title, items, emoji, delayBase }: {
+  title: string
+  items: CollectionItem[]
+  emoji: string
+  delayBase: number
+}) {
+  const obtenidos = items.filter(i => i.status !== 'buscando').length
+  return (
+    <div className="mb-10">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: delayBase }}
+        className="flex items-center justify-between mb-4"
+      >
+        <h2 className="text-xs font-semibold tracking-widest uppercase text-gray-500">{title}</h2>
+        <span className="text-xs font-mono" style={{ color: '#00f5ff' }}>{obtenidos}/{items.length} obtenidos</span>
+      </motion.div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {items.map((item, i) => {
+          const s = statusStyle[item.status]
+          const obtained = item.status !== 'buscando'
+          return (
+            <motion.div
+              key={item.model}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: delayBase + 0.05 + i * 0.04 }}
+              className="glass-panel rounded-sm p-4 transition-all duration-300"
+              style={{ opacity: obtained ? 1 : 0.45, borderColor: obtained ? s.border : undefined }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">{obtained ? emoji : '🔍'}</span>
+                <span className="text-xs font-bold px-1.5 py-0.5 rounded-sm"
+                  style={{ background: s.bg, color: s.color, border: `1px solid ${s.border}` }}>
+                  {s.label}
+                </span>
+              </div>
+              <p className="font-display font-black text-sm text-white mb-0.5">{item.model}</p>
+              <p className="text-xs text-gray-600 font-mono">{item.year}</p>
+              {item.note && <p className="text-xs mt-1.5" style={{ color: s.color }}>{item.note}</p>}
+            </motion.div>
+          )
+        })}
+      </div>
+    </div>
+  )
 }
 
 export default function PageColeccion() {
@@ -156,6 +228,12 @@ export default function PageColeccion() {
             )
           })}
         </div>
+
+        {/* PlayStation */}
+        <ConsoleGrid title="Coleccion PlayStation" items={playstations} emoji="🎮" delayBase={0.6} />
+
+        {/* Nintendo */}
+        <ConsoleGrid title="Coleccion Nintendo" items={nintendo} emoji="🕹️" delayBase={0.7} />
 
         {/* Leyenda */}
         <motion.div
