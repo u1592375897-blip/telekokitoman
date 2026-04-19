@@ -214,6 +214,22 @@ if (-not $pendingChanges) {
   Write-Ok "Push a GitHub completado"
 }
 
+# ════════════════════════════════════════════════════════════════════════════
+# ARCHIVAR EN INTERNET ARCHIVE (Wayback Machine)
+# ════════════════════════════════════════════════════════════════════════════
+Write-Step "Archivando en Internet Archive..."
+try {
+  $archiveUrl = "https://web.archive.org/save/$FRONTEND_PROD"
+  $archiveRes = Invoke-WebRequest -Uri $archiveUrl -Method GET -UseBasicParsing -TimeoutSec 30
+  if ($archiveRes.StatusCode -in 200, 302) {
+    Write-Ok "Archivado en Wayback Machine: https://web.archive.org/web/*/$FRONTEND_PROD"
+  } else {
+    Write-Warn "Respuesta inesperada del archivado: $($archiveRes.StatusCode)"
+  }
+} catch {
+  Write-Warn "No se pudo archivar en Wayback Machine: $($_.Exception.Message)"
+}
+
 # ── Resumen final ────────────────────────────────────────────────────────────
 $sep = "=" * 55
 Write-Host ""
