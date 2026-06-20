@@ -28,7 +28,7 @@ export default function Contact() {
     <section id="contact" className="py-24 px-4 relative">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(0,245,255,0.03) 0%, transparent 60%)' }}
+        style={{ background: 'radial-gradient(ellipse at 20% 50%, hsl(var(--primary) / 0.04) 0%, transparent 60%)' }}
       />
       <div className="max-w-xl mx-auto relative z-10">
         <div className="text-center mb-12">
@@ -44,7 +44,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-display font-black text-3xl sm:text-4xl text-white"
+            className="font-display font-black text-3xl sm:text-4xl text-slate-800"
           >
             Escríbeme
           </motion.h2>
@@ -62,32 +62,32 @@ export default function Contact() {
             { key: 'email', label: 'Email', type: 'email', placeholder: 'tu@email.com' },
           ].map(f => (
             <div key={f.key}>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1.5">{f.label}</label>
+              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1.5">{f.label}</label>
               <input
                 type={f.type}
                 value={form[f.key as keyof typeof form]}
                 onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
                 placeholder={f.placeholder}
                 required
-                className="w-full bg-transparent text-sm text-white placeholder-gray-700 outline-none px-4 py-3 rounded-sm transition-colors"
-                style={{ border: '1px solid rgba(0,245,255,0.12)', background: 'rgba(0,245,255,0.02)' }}
-                onFocus={e => (e.target.style.borderColor = 'rgba(0,245,255,0.4)')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(0,245,255,0.12)')}
+                className="w-full bg-white text-sm text-slate-800 placeholder-slate-400 outline-none px-4 py-3 rounded-sm transition-colors"
+                style={{ border: '1px solid hsl(var(--border))' }}
+                onFocus={e => (e.target.style.borderColor = 'hsl(var(--primary) / 0.5)')}
+                onBlur={e => (e.target.style.borderColor = 'hsl(var(--border))')}
               />
             </div>
           ))}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1.5">Mensaje</label>
+            <label className="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1.5">Mensaje</label>
             <textarea
               value={form.message}
               onChange={e => setForm(prev => ({ ...prev, message: e.target.value }))}
               placeholder="Tu mensaje..."
               required
               rows={4}
-              className="w-full bg-transparent text-sm text-white placeholder-gray-700 outline-none px-4 py-3 rounded-sm resize-none transition-colors"
-              style={{ border: '1px solid rgba(0,245,255,0.12)', background: 'rgba(0,245,255,0.02)' }}
-              onFocus={e => (e.target.style.borderColor = 'rgba(0,245,255,0.4)')}
-              onBlur={e => (e.target.style.borderColor = 'rgba(0,245,255,0.12)')}
+              className="w-full bg-white text-sm text-slate-800 placeholder-slate-400 outline-none px-4 py-3 rounded-sm resize-none transition-colors"
+              style={{ border: '1px solid hsl(var(--border))' }}
+              onFocus={e => (e.target.style.borderColor = 'hsl(var(--primary) / 0.5)')}
+              onBlur={e => (e.target.style.borderColor = 'hsl(var(--border))')}
             />
           </div>
 
@@ -100,10 +100,10 @@ export default function Contact() {
           </button>
 
           {status === 'ok' && (
-            <p className="text-center text-sm text-cyan-400">✓ Mensaje enviado correctamente</p>
+            <p className="text-center text-sm text-green-600">✓ Mensaje enviado correctamente</p>
           )}
           {status === 'error' && (
-            <p className="text-center text-sm text-red-400">Error al enviar. Inténtalo más tarde.</p>
+            <p className="text-center text-sm text-red-500">Error al enviar. Inténtalo más tarde.</p>
           )}
         </motion.form>
       </div>

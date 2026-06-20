@@ -12,7 +12,7 @@ export default function About() {
     <section id="about" className="py-24 px-4 relative overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(191,0,255,0.04) 0%, transparent 60%)' }}
+        style={{ background: 'radial-gradient(ellipse at 80% 50%, hsl(var(--accent) / 0.05) 0%, transparent 60%)' }}
       />
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -25,11 +25,11 @@ export default function About() {
             <p className="text-xs font-semibold tracking-widest uppercase mb-3 neon-text-purple">
               Sobre mí
             </p>
-            <h2 className="font-display font-black text-3xl sm:text-4xl text-white mb-6 leading-tight">
+            <h2 className="font-display font-black text-3xl sm:text-4xl text-slate-800 mb-6 leading-tight">
               Hola, soy{' '}
               <span
                 style={{
-                  background: 'linear-gradient(135deg, #00f5ff, #bf00ff)',
+                  background: 'linear-gradient(135deg, hsl(205 90% 55%), hsl(190 80% 48%))',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -37,12 +37,12 @@ export default function About() {
                 Sergio
               </span>
             </h2>
-            <div className="space-y-4 text-gray-400 leading-relaxed">
+            <div className="space-y-4 text-slate-600 leading-relaxed">
               <p>
                 Creador de contenido apasionado por la tecnología retro, los videojuegos y los tutoriales tech.
               </p>
               <p>
-                En mi canal <span className="text-cyan-400 font-semibold">@Teleko360</span> subo videos sobre dispositivos clásicos, colecciones y todo lo relacionado con el mundo tech.
+                En mi canal <span className="font-semibold neon-text-cyan">@Teleko360</span> subo videos sobre dispositivos clásicos, colecciones y todo lo relacionado con el mundo tech.
               </p>
               <p>
                 También estoy en TikTok, Instagram y más redes donde comparto el mismo contenido en diferentes formatos.
@@ -80,19 +80,19 @@ export default function About() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="flex items-center gap-4 glass-panel rounded-sm p-4 group hover:border-white/10 transition-all duration-200"
+                className="flex items-center gap-4 glass-panel rounded-sm p-4 group hover:border-slate-200 transition-all duration-200"
               >
                 <div
                   className="w-10 h-10 rounded-sm flex items-center justify-center shrink-0 text-sm font-bold"
-                  style={{ background: `${s.color}22`, border: `1px solid ${s.color}44`, color: s.color }}
+                  style={{ background: `${s.color}18`, border: `1px solid ${s.color}40`, color: s.color }}
                 >
                   {s.name[0]}
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-white">{s.name}</p>
-                  <p className="text-xs text-gray-500 font-mono">{s.handle}</p>
+                  <p className="text-sm font-semibold text-slate-800">{s.name}</p>
+                  <p className="text-xs text-slate-500 font-mono">{s.handle}</p>
                 </div>
-                <span className="text-gray-700 group-hover:text-gray-400 transition-colors text-sm">→</span>
+                <span className="text-slate-300 group-hover:text-slate-500 transition-colors text-sm">→</span>
               </motion.a>
             ))}
           </motion.div>

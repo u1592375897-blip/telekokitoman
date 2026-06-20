@@ -53,10 +53,10 @@ const iphones: { model: string; year: string; status: IPhoneStatus; note?: strin
 ]
 
 const statusStyle: Record<IPhoneStatus, { label: string; color: string; bg: string; border: string }> = {
-  obtenido:  { label: 'Obtenido',   color: '#00f5ff', bg: 'rgba(0,245,255,0.08)',   border: 'rgba(0,245,255,0.3)' },
+  obtenido:  { label: 'Obtenido',   color: '#259df4', bg: 'rgba(37,157,244,0.08)',  border: 'rgba(37,157,244,0.3)' },
   roto:      { label: 'Roto',       color: '#ff6b35', bg: 'rgba(255,107,53,0.08)',  border: 'rgba(255,107,53,0.3)' },
-  reparando: { label: 'Reparando',  color: '#f5c518', bg: 'rgba(245,197,24,0.08)',  border: 'rgba(245,197,24,0.3)' },
-  buscando:  { label: 'Buscando',   color: '#6b7280', bg: 'rgba(107,114,128,0.05)', border: 'rgba(107,114,128,0.2)' },
+  reparando: { label: 'Reparando',  color: '#d99c00', bg: 'rgba(217,156,0,0.08)',   border: 'rgba(217,156,0,0.3)' },
+  buscando:  { label: 'Buscando',   color: '#94a3b8', bg: 'rgba(148,163,184,0.08)', border: 'rgba(148,163,184,0.25)' },
 }
 
 function CollectionGrid({ title, items, emoji, delayBase }: {
@@ -78,7 +78,7 @@ function CollectionGrid({ title, items, emoji, delayBase }: {
         transition={{ delay: delayBase }}
         className="flex items-center justify-between mb-4"
       >
-        <h2 className="text-xs font-semibold tracking-widest uppercase text-gray-500">{title}</h2>
+        <h2 className="text-xs font-semibold tracking-widest uppercase text-slate-500">{title}</h2>
         <span className="text-xs font-mono" style={{ color: 'hsl(var(--primary))' }}>{obtenidos}/{items.length} obtenidos</span>
       </motion.div>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -101,8 +101,8 @@ function CollectionGrid({ title, items, emoji, delayBase }: {
                   {s.label}
                 </span>
               </div>
-              <p className="font-display font-black text-sm text-white mb-0.5">{item.model}</p>
-              <p className="text-xs text-gray-600 font-mono">{item.year}</p>
+              <p className="font-display font-black text-sm text-slate-800 mb-0.5">{item.model}</p>
+              <p className="text-xs text-slate-400 font-mono">{item.year}</p>
               {item.note && <p className="text-xs mt-1.5" style={{ color: s.color }}>{item.note}</p>}
             </motion.div>
           )
@@ -129,7 +129,7 @@ export default function PageColeccion() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display font-black text-4xl sm:text-6xl text-white mb-4"
+            className="font-display font-black text-4xl sm:text-6xl text-slate-800 mb-4"
           >
             Mi Coleccion
           </motion.h1>
@@ -137,7 +137,7 @@ export default function PageColeccion() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-gray-500 max-w-md mx-auto"
+            className="text-slate-500 max-w-md mx-auto"
           >
             Dispositivos retro que colecciono, reparo y exploro en pleno 2026.
           </motion.p>
@@ -153,7 +153,7 @@ export default function PageColeccion() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9 }}
-          className="flex flex-wrap gap-4 mt-8 justify-center text-xs text-gray-600"
+          className="flex flex-wrap gap-4 mt-8 justify-center text-xs text-slate-500"
         >
           {Object.entries(statusStyle).map(([key, s]) => (
             <span key={key} className="flex items-center gap-1.5">
@@ -167,10 +167,10 @@ export default function PageColeccion() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="text-center text-gray-700 text-sm mt-10"
+          className="text-center text-slate-400 text-sm mt-10"
         >
           Coleccion en constante crecimiento &mdash; sigueme en{' '}
-          <a href="https://www.youtube.com/@Teleko360" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:underline">
+          <a href="https://www.youtube.com/@Teleko360" target="_blank" rel="noopener noreferrer" className="text-[hsl(var(--primary))] hover:underline">
             @Teleko360
           </a>{' '}
           para ver mas.

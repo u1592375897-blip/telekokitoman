@@ -53,7 +53,7 @@ export default function Redes() {
     <section id="redes" className="py-24 px-4 relative">
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(191,0,255,0.03) 0%, transparent 60%)' }}
+        style={{ background: 'radial-gradient(ellipse at 50% 30%, hsl(var(--accent) / 0.04) 0%, transparent 60%)' }}
       />
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
@@ -70,7 +70,7 @@ export default function Redes() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-display font-black text-3xl sm:text-5xl text-white"
+            className="font-display font-black text-3xl sm:text-5xl text-slate-800"
           >
             Mis Redes
           </motion.h2>
@@ -97,7 +97,7 @@ export default function Redes() {
               style={{ borderColor: `${s.color}22` }}
             >
               <span className="text-4xl block mb-3">{s.emoji}</span>
-              <p className="font-display font-black text-white text-base mb-1">{s.name}</p>
+              <p className="font-display font-black text-slate-800 text-base mb-1">{s.name}</p>
               <p className="text-xs font-mono mb-3" style={{ color: s.color }}>{s.handle}</p>
               <span
                 className="text-xs font-semibold px-3 py-1 rounded-full"
@@ -119,7 +119,7 @@ export default function Redes() {
               viewport={{ once: true }}
               transition={{ delay: si * 0.06 }}
             >
-              <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest mb-3" style={{ color: 'rgba(0,245,255,0.7)' }}>
+              <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest mb-3 neon-text-cyan">
                 <span>{section.emoji}</span> {section.title}
               </h3>
               <div className="space-y-2">
@@ -130,14 +130,14 @@ export default function Redes() {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 glass-panel rounded-sm px-4 py-3 transition-all duration-200 group hover:border-cyan-500/20 cursor-pointer"
+                      className="flex items-center gap-3 glass-panel rounded-sm px-4 py-3 transition-all duration-200 group hover:border-[hsl(var(--primary)/0.3)] cursor-pointer"
                     >
                       <span className="text-lg">{item.emoji}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white">{item.name}</p>
-                        <p className="text-xs text-gray-500 font-mono truncate">{item.handle}</p>
+                        <p className="text-sm font-semibold text-slate-800">{item.name}</p>
+                        <p className="text-xs text-slate-500 font-mono truncate">{item.handle}</p>
                       </div>
-                      <span className="text-gray-700 group-hover:text-cyan-400 transition-colors text-sm shrink-0">→</span>
+                      <span className="text-slate-300 group-hover:text-[hsl(var(--primary))] transition-colors text-sm shrink-0">→</span>
                     </a>
                   ) : (
                     <div
@@ -146,8 +146,8 @@ export default function Redes() {
                     >
                       <span className="text-lg">{item.emoji}</span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white">{item.name}</p>
-                        <p className="text-xs text-gray-500 font-mono truncate">{item.handle}</p>
+                        <p className="text-sm font-semibold text-slate-800">{item.name}</p>
+                        <p className="text-xs text-slate-500 font-mono truncate">{item.handle}</p>
                       </div>
                     </div>
                   )

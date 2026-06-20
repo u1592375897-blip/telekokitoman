@@ -49,8 +49,8 @@ export default function Chatbot() {
         onClick={() => setOpen(!open)}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110"
         style={{
-          background: 'linear-gradient(135deg, #00f5ff, #bf00ff)',
-          boxShadow: '0 0 20px rgba(0,245,255,0.4)',
+          background: 'linear-gradient(135deg, hsl(205 90% 55%), hsl(190 80% 48%))',
+          boxShadow: '0 4px 20px hsl(205 90% 55% / 0.4)',
         }}
         aria-label="Abrir chatbot"
       >
@@ -68,28 +68,28 @@ export default function Chatbot() {
             className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 flex flex-col rounded-sm overflow-hidden"
             style={{
               height: '460px',
-              background: 'rgba(10,10,20,0.95)',
-              border: '1px solid rgba(0,245,255,0.2)',
-              boxShadow: '0 0 40px rgba(0,245,255,0.1)',
+              background: 'rgba(255,255,255,0.98)',
+              border: '1px solid hsl(var(--border))',
+              boxShadow: '0 8px 40px hsl(205 60% 60% / 0.18)',
               backdropFilter: 'blur(20px)',
             }}
           >
             {/* Header */}
             <div
               className="px-4 py-3 flex items-center gap-3 shrink-0"
-              style={{ borderBottom: '1px solid rgba(0,245,255,0.1)', background: 'rgba(0,245,255,0.03)' }}
+              style={{ borderBottom: '1px solid hsl(var(--border))', background: 'hsl(var(--secondary) / 0.5)' }}
             >
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm"
-                style={{ background: 'linear-gradient(135deg, #00f5ff22, #bf00ff22)', border: '1px solid rgba(0,245,255,0.3)' }}>
+                style={{ background: 'hsl(var(--primary) / 0.12)', border: '1px solid hsl(var(--primary) / 0.3)' }}>
                 🤖
               </div>
               <div>
-                <p className="text-sm font-bold text-white">Asistente TKM</p>
-                <p className="text-xs text-gray-500">Pregúntame sobre Sergio</p>
+                <p className="text-sm font-bold text-slate-800">Asistente TKM</p>
+                <p className="text-xs text-slate-500">Pregúntame sobre Sergio</p>
               </div>
               <div className="ml-auto flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                <span className="text-xs text-gray-600">Online</span>
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-xs text-slate-400">Online</span>
               </div>
             </div>
 
@@ -104,8 +104,8 @@ export default function Chatbot() {
                     className="max-w-[85%] px-3 py-2 rounded-sm text-sm leading-relaxed"
                     style={
                       msg.role === 'user'
-                        ? { background: 'linear-gradient(135deg, rgba(0,245,255,0.15), rgba(191,0,255,0.15))', border: '1px solid rgba(0,245,255,0.2)', color: '#e0e0e0' }
-                        : { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', color: '#b0b0b0' }
+                        ? { background: 'linear-gradient(135deg, hsl(205 90% 55% / 0.14), hsl(190 80% 48% / 0.14))', border: '1px solid hsl(var(--primary) / 0.25)', color: 'hsl(215 35% 22%)' }
+                        : { background: 'hsl(var(--secondary))', border: '1px solid hsl(var(--border))', color: 'hsl(215 20% 35%)' }
                     }
                   >
                     {msg.content}
@@ -116,13 +116,13 @@ export default function Chatbot() {
                 <div className="flex justify-start">
                   <div
                     className="px-4 py-3 rounded-sm"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}
+                    style={{ background: 'hsl(var(--secondary))', border: '1px solid hsl(var(--border))' }}
                   >
                     <span className="flex gap-1">
                       {[0, 0.15, 0.3].map(d => (
                         <span
                           key={d}
-                          className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-bounce"
+                          className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--primary))] animate-bounce"
                           style={{ animationDelay: `${d}s` }}
                         />
                       ))}
@@ -136,7 +136,7 @@ export default function Chatbot() {
             {/* Input */}
             <div
               className="p-3 flex gap-2 shrink-0"
-              style={{ borderTop: '1px solid rgba(0,245,255,0.1)' }}
+              style={{ borderTop: '1px solid hsl(var(--border))' }}
             >
               <input
                 type="text"
@@ -144,8 +144,8 @@ export default function Chatbot() {
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && send()}
                 placeholder="Escribe tu pregunta..."
-                className="flex-1 bg-transparent text-sm text-white placeholder-gray-600 outline-none px-3 py-2 rounded-sm"
-                style={{ border: '1px solid rgba(0,245,255,0.15)', background: 'rgba(0,245,255,0.03)' }}
+                className="flex-1 bg-white text-sm text-slate-800 placeholder-slate-400 outline-none px-3 py-2 rounded-sm"
+                style={{ border: '1px solid hsl(var(--border))' }}
                 disabled={loading}
               />
               <button
@@ -153,8 +153,8 @@ export default function Chatbot() {
                 disabled={loading || !input.trim()}
                 className="px-3 py-2 rounded-sm text-sm font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                 style={{
-                  background: 'linear-gradient(135deg, #00f5ff, #bf00ff)',
-                  color: '#0a0a0f',
+                  background: 'linear-gradient(135deg, hsl(205 90% 55%), hsl(190 80% 48%))',
+                  color: '#ffffff',
                   minWidth: '40px',
                 }}
               >

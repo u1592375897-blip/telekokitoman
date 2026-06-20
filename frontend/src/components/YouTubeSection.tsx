@@ -53,7 +53,7 @@ export default function YouTubeSection() {
             Canal de YouTube
           </motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            className="font-display font-black text-3xl sm:text-5xl text-white mb-3">
+            className="font-display font-black text-3xl sm:text-5xl text-slate-800 mb-3">
             Todos los Videos
           </motion.h2>
           <motion.a initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
@@ -74,19 +74,19 @@ export default function YouTubeSection() {
                 placeholder="Buscar video..."
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                className="flex-1 glass-panel rounded-sm px-3 py-2 text-sm text-white placeholder-gray-600 outline-none focus:border-cyan-500/40 transition-colors"
-                style={{ border: '1px solid rgba(0,245,255,0.1)' }}
+                className="flex-1 glass-panel rounded-sm px-3 py-2 text-sm text-slate-800 placeholder-slate-400 outline-none transition-colors"
+                style={{ border: '1px solid hsl(var(--border))' }}
               />
               {query && (
                 <button onClick={() => setQuery('')}
-                  className="text-gray-600 hover:text-white transition-colors text-lg leading-none">×</button>
+                  className="text-slate-400 hover:text-slate-700 transition-colors text-lg leading-none">×</button>
               )}
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-xs text-gray-600 font-mono">{filtered.length} / {videos.length} videos</span>
+              <span className="text-xs text-slate-500 font-mono">{filtered.length} / {videos.length} videos</span>
               <select value={sort} onChange={e => setSort(e.target.value as 'newest' | 'oldest')}
-                className="glass-panel rounded-sm px-2 py-1.5 text-xs text-gray-400 outline-none cursor-pointer"
-                style={{ border: '1px solid rgba(0,245,255,0.1)' }}>
+                className="glass-panel rounded-sm px-2 py-1.5 text-xs text-slate-600 outline-none cursor-pointer"
+                style={{ border: '1px solid hsl(var(--border))' }}>
                 <option value="newest">Mas nuevos</option>
                 <option value="oldest">Mas antiguos</option>
               </select>
@@ -99,10 +99,10 @@ export default function YouTubeSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="glass-panel rounded-sm overflow-hidden animate-pulse">
-                <div className="aspect-video bg-gray-800/50" />
+                <div className="aspect-video bg-slate-200" />
                 <div className="p-3 space-y-2">
-                  <div className="h-3 bg-gray-700/50 rounded w-3/4" />
-                  <div className="h-2 bg-gray-700/30 rounded w-1/2" />
+                  <div className="h-3 bg-slate-200 rounded w-3/4" />
+                  <div className="h-2 bg-slate-100 rounded w-1/2" />
                 </div>
               </div>
             ))}
@@ -111,7 +111,7 @@ export default function YouTubeSection() {
 
         {/* Error */}
         {error && (
-          <div className="text-center py-16 text-gray-600">
+          <div className="text-center py-16 text-slate-400">
             <p className="text-4xl mb-4">📡</p>
             <p>No se pudieron cargar los videos.</p>
             <a href="https://www.youtube.com/@Teleko360" target="_blank" rel="noopener noreferrer"
@@ -123,7 +123,7 @@ export default function YouTubeSection() {
 
         {/* No results */}
         {!loading && !error && filtered.length === 0 && (
-          <div className="text-center py-16 text-gray-600">
+          <div className="text-center py-16 text-slate-400">
             <p className="text-3xl mb-3">🔍</p>
             <p>No hay videos que coincidan con &ldquo;{query}&rdquo;</p>
           </div>
@@ -141,8 +141,8 @@ export default function YouTubeSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.04, 0.6) }}
-                className="glass-panel rounded-sm overflow-hidden group hover:border-cyan-500/30 transition-all duration-300"
-                style={{ border: '1px solid rgba(0,245,255,0.08)' }}
+                className="glass-panel rounded-sm overflow-hidden group hover:border-[hsl(var(--primary)/0.4)] transition-all duration-300"
+                style={{ border: '1px solid hsl(var(--border))' }}
               >
                 <div className="relative aspect-video overflow-hidden">
                   <img src={vid.thumbnail} alt={vid.title}
@@ -155,13 +155,13 @@ export default function YouTubeSection() {
                     </div>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 h-0.5"
-                    style={{ background: 'linear-gradient(90deg, #00f5ff, #bf00ff)' }} />
+                    style={{ background: 'linear-gradient(90deg, hsl(205 90% 55%), hsl(190 80% 48%))' }} />
                 </div>
                 <div className="p-3">
-                  <h3 className="text-xs font-semibold text-white line-clamp-2 group-hover:text-cyan-300 transition-colors leading-snug">
+                  <h3 className="text-xs font-semibold text-slate-800 line-clamp-2 group-hover:text-[hsl(var(--primary))] transition-colors leading-snug">
                     {vid.title}
                   </h3>
-                  <p className="text-xs text-gray-600 mt-1 font-mono">
+                  <p className="text-xs text-slate-400 mt-1 font-mono">
                     {new Date(vid.publishedAt).toLocaleDateString('es-ES')}
                   </p>
                 </div>

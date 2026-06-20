@@ -24,7 +24,7 @@ export default function PageAcerca() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display font-black text-4xl sm:text-6xl text-white mb-4"
+            className="font-display font-black text-4xl sm:text-6xl text-slate-800 mb-4"
           >
             Telekoquitoman
           </motion.h1>
@@ -32,7 +32,7 @@ export default function PageAcerca() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-gray-500 max-w-md mx-auto"
+            className="text-slate-500 max-w-md mx-auto"
           >
             Web personal de contenido retro y tecnologia.
           </motion.p>
@@ -53,7 +53,7 @@ export default function PageAcerca() {
               transition={{ delay: 0.2 + i * 0.06 }}
               className="glass-panel rounded-sm px-4 py-2 text-center"
             >
-              <p className="text-xs text-gray-500 uppercase tracking-widest mb-0.5">{b.label}</p>
+              <p className="text-xs text-slate-500 uppercase tracking-widest mb-0.5">{b.label}</p>
               <p className="font-display font-black text-sm neon-text-cyan">{b.value}</p>
             </motion.div>
           ))}
@@ -66,19 +66,19 @@ export default function PageAcerca() {
           transition={{ delay: 0.35 }}
           className="glass-panel rounded-sm p-6 mb-6"
         >
-          <h2 className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-3">Sistema RMB</h2>
-          <p className="text-white font-bold mb-2">RMB &mdash; Sistema de personalizacion del tema de la web</p>
-          <p className="text-gray-400 text-sm leading-relaxed">
-            Todos los temas, estilos y sonidos de esta web provienen de mi proyecto anterior en Lovable,{' '}
+          <h2 className="text-xs font-semibold tracking-widest uppercase text-slate-500 mb-3">Sistema RMB</h2>
+          <p className="text-slate-800 font-bold mb-2">RMB &mdash; Sistema de personalizacion del tema de la web</p>
+          <p className="text-slate-500 text-sm leading-relaxed">
+            El sistema de temas y sonidos de la version 1.0 provenia de mi proyecto anterior en Lovable,{' '}
             <a
               href="https://telekoquitomanweb.lovable.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-500 hover:underline"
+              className="text-[hsl(var(--primary))] hover:underline"
             >
               telekoquitomanweb.lovable.app
             </a>
-            , creado el 22/02/2026. RMB integra esos temas en esta version mejorada del sitio.
+            , creado el 22/02/2026. Desde entonces la web evoluciono a un diseño unico mas claro.
           </p>
         </motion.div>
 
@@ -89,15 +89,15 @@ export default function PageAcerca() {
           transition={{ delay: 0.45 }}
           className="glass-panel rounded-sm p-6 mb-6"
         >
-          <h2 className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-3">Desarrollador</h2>
+          <h2 className="text-xs font-semibold tracking-widest uppercase text-slate-500 mb-3">Desarrollador</h2>
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
               style={{ background: 'radial-gradient(circle at 35% 30%, hsl(var(--primary)/.9), hsl(var(--primary)) 60%)', boxShadow: '0 4px 15px hsl(var(--primary)/.3)' }}>
-              <span className="text-xs font-black text-black/80 tracking-widest">TKM</span>
+              <span className="text-xs font-black text-white tracking-widest">TKM</span>
             </div>
             <div>
-              <p className="text-white font-bold">Sergio Montes Jimenez</p>
-              <p className="text-gray-500 text-sm font-mono">@Telekoquitoman</p>
+              <p className="text-slate-800 font-bold">Sergio Montes Jimenez</p>
+              <p className="text-slate-500 text-sm font-mono">@Telekoquitoman</p>
             </div>
           </div>
         </motion.div>
@@ -109,18 +109,33 @@ export default function PageAcerca() {
           transition={{ delay: 0.55 }}
           className="glass-panel rounded-sm p-6"
         >
-          <h2 className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-3">Historial</h2>
-          <div className="flex items-start gap-3">
-            <span className="text-xs font-mono px-2 py-0.5 rounded-sm"
-              style={{ background: 'rgba(0,245,255,0.08)', color: '#00f5ff', border: '1px solid rgba(0,245,255,0.3)' }}>
-              v1.0 RMB
-            </span>
-            <div>
-              <p className="text-white text-sm font-bold">Lanzamiento inicial</p>
-              <p className="text-gray-500 text-xs font-mono">19/04/2026</p>
-              <p className="text-gray-400 text-sm mt-1">
-                Multi-tema RMB, coleccion de dispositivos, chatbot IA, paginas de videos y contacto.
-              </p>
+          <h2 className="text-xs font-semibold tracking-widest uppercase text-slate-500 mb-3">Historial</h2>
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <span className="text-xs font-mono px-2 py-0.5 rounded-sm shrink-0"
+                style={{ background: 'rgba(37,157,244,0.08)', color: '#259df4', border: '1px solid rgba(37,157,244,0.3)' }}>
+                v2.0
+              </span>
+              <div>
+                <p className="text-slate-800 text-sm font-bold">Rediseño cielo</p>
+                <p className="text-slate-400 text-xs font-mono">20/06/2026</p>
+                <p className="text-slate-500 text-sm mt-1">
+                  Nueva estetica unica: cielo, burbujas y navbar claro, sustituyendo el sistema multi-tema RMB.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-xs font-mono px-2 py-0.5 rounded-sm shrink-0"
+                style={{ background: 'rgba(37,157,244,0.08)', color: '#259df4', border: '1px solid rgba(37,157,244,0.3)' }}>
+                v1.0 RMB
+              </span>
+              <div>
+                <p className="text-slate-800 text-sm font-bold">Lanzamiento inicial</p>
+                <p className="text-slate-400 text-xs font-mono">19/04/2026</p>
+                <p className="text-slate-500 text-sm mt-1">
+                  Multi-tema RMB, coleccion de dispositivos, chatbot IA, paginas de videos y contacto.
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -129,10 +144,10 @@ export default function PageAcerca() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-center text-gray-700 text-sm mt-10"
+          className="text-center text-slate-400 text-sm mt-10"
         >
           Sigueme en{' '}
-          <a href="https://www.youtube.com/@Teleko360" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:underline">
+          <a href="https://www.youtube.com/@Teleko360" target="_blank" rel="noopener noreferrer" className="text-[hsl(var(--primary))] hover:underline">
             @Teleko360
           </a>{' '}
           para mas contenido.
