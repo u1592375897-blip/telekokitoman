@@ -10,6 +10,7 @@ const navLinks = [
   { label: 'Coleccion', path: '/coleccion' },
   { label: 'Sobre mi', path: '/sobre-mi' },
   { label: 'Contacto', path: '/contacto' },
+  { label: 'Acerca',   path: '/acerca' },
 ]
 
 const themes = Object.keys(themeNames) as Theme[]

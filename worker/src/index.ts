@@ -43,16 +43,47 @@ export default {
       try {
         const channelId = env.YOUTUBE_CHANNEL_ID
         const apiKey = env.YOUTUBE_API_KEY
-        const ytUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=6&order=viewCount&type=video&key=${apiKey}`
-        const res = await fetch(ytUrl)
-        const data = await res.json() as { items?: { id: { videoId: string }; snippet: { title: string; thumbnails: { high: { url: string } }; publishedAt: string } }[] }
-        const videos = (data.items || []).map(item => ({
-          id: item.id.videoId,
-          title: item.snippet.title,
-          thumbnail: item.snippet.thumbnails.high.url,
-          publishedAt: item.snippet.publishedAt,
-          url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-        }))
+
+        // Get uploads playlist ID for the channel (1 quota unit)
+        const chRes = await fetch(
+          `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${apiKey}`
+        )
+        const chData = await chRes.json() as {
+          items?: { contentDetails: { relatedPlaylists: { uploads: string } } }[]
+        }
+        const uploadsId = chData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads
+        if (!uploadsId) return json({ error: 'Channel not found' }, 404, corsHeaders)
+
+        // Paginate through all videos (1 quota unit per page)
+        type PlaylistItem = {
+          snippet: {
+            resourceId: { videoId: string }
+            title: string
+            thumbnails: { high?: { url: string }; medium?: { url: string } }
+            publishedAt: string
+          }
+        }
+        const videos: { id: string; title: string; thumbnail: string; publishedAt: string; url: string }[] = []
+        let pageToken: string | undefined = undefined
+        do {
+          const pageParam = pageToken ? `&pageToken=${pageToken}` : ''
+          const plRes = await fetch(
+            `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsId}&maxResults=50${pageParam}&key=${apiKey}`
+          )
+          const plData = await plRes.json() as { items?: PlaylistItem[]; nextPageToken?: string }
+          for (const item of plData.items || []) {
+            const thumb = item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url || ''
+            videos.push({
+              id: item.snippet.resourceId.videoId,
+              title: item.snippet.title,
+              thumbnail: thumb,
+              publishedAt: item.snippet.publishedAt,
+              url: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
+            })
+          }
+          pageToken = plData.nextPageToken
+        } while (pageToken)
+
         return json(videos, 200, corsHeaders)
       } catch (e) {
         return json({ error: 'YouTube API error' }, 500, corsHeaders)
