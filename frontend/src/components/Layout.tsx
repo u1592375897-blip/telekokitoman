@@ -8,8 +8,6 @@ const navLinks = [
   { label: 'Videos',    path: '/videos' },
   { label: 'Coleccion', path: '/coleccion' },
   { label: 'Sobre mi',  path: '/sobre-mi' },
-  { label: 'Contacto',  path: '/contacto' },
-  { label: 'Acerca',    path: '/acerca' },
 ]
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -5,8 +5,6 @@ import PageInicio from './pages/PageInicio'
 import PageVideos from './pages/PageVideos'
 import PageColeccion from './pages/PageColeccion'
 import PageSobreMi from './pages/PageSobreMi'
-import PageContacto from './pages/PageContacto'
-import PageAcerca from './pages/PageAcerca'
 
 function App() {
   return (
@@ -17,8 +15,6 @@ function App() {
           <Route path="/videos"     element={<PageVideos />} />
           <Route path="/coleccion"  element={<PageColeccion />} />
           <Route path="/sobre-mi"   element={<PageSobreMi />} />
-          <Route path="/contacto"   element={<PageContacto />} />
-          <Route path="/acerca"     element={<PageAcerca />} />
         </Routes>
       </Layout>
       <Chatbot />

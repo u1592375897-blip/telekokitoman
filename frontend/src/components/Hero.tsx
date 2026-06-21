@@ -6,7 +6,6 @@ const quickLinks = [
   { label: 'Videos',    path: '/videos',    emoji: '▶️' },
   { label: 'Coleccion', path: '/coleccion', emoji: '🕹️' },
   { label: 'Sobre mi',  path: '/sobre-mi',  emoji: '👋' },
-  { label: 'Contacto',  path: '/contacto',  emoji: '✉️' },
 ]
 
 const stats = [
